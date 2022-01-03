@@ -71,13 +71,17 @@
                         </div>
                         <table class="table table-striped" style="margin:5px;">
                             <thead class="thead-dark"><tr>
+                                <th></th>
                                 <th>Name</th>
-                                <th>Houses</th>
-                                <th>Mortaged</th>
+                                <th>House</th>
+                                <th>Mort.</th>
                             </tr></thead>
                             <tbody>
                                 @foreach (var c in p.Props) {
                                     <tr>
+                                        <td>
+                                            <button @onclick="(() => DelProp(p, c))" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span></button>
+                                            </td>
                                         <td><select @bind="c.Name" class="form-control">
                                             @foreach (var group in b.Places.Where(card => card.Ownable == true ).GroupBy(card => card.ColorName))
                                             {
@@ -150,6 +154,11 @@
 
    private void AddProp(DataModels.Player p) {
        p.Props.Add(new DataModels.Prop());
+       StateHasChanged();
+   }
+
+   private void DelProp(DataModels.Player p, DataModels.Prop c) {
+       p.Props.RemoveAll(card => card.Name == c.Name);
        StateHasChanged();
    }
 
