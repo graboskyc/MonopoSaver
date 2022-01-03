@@ -9,6 +9,10 @@
     <div class="jumbotron jumbotron-fluid" style="margin-bottom:20px;">
         <h1>Monopo Saver</h1>
         <h3><i>Game Code <b>@g.Token</b></i></h3>
+        <h3>Board Variant <select @onchange="VariantChanged" class="form-control">
+            <option>GB</option>
+            <option>Original</option>
+        </select></h3>
     </div>
 
     <EditForm Model="@g">
@@ -23,14 +27,14 @@
                     <table class="table">
                         <tr><th>Piece</th>
                             <td><select @bind="p.GamePiece" class="form-control">
-                                @foreach (var piece in DataModels.Board.Pieces)
+                                @foreach (var piece in b.Pieces)
                                 {
                                     <option>@piece</option>
                                 }
                                 </select></td></tr>
                         <tr><th>Position</th>
                             <td><select @bind="p.LastPosition" class="form-control">
-                                @foreach (var card in DataModels.Board.Places)
+                                @foreach (var card in b.Places)
                                 {
                                     <option>@card.Name</option>
                                 }
@@ -57,7 +61,7 @@
                                 @foreach (var c in p.Props) {
                                     <tr>
                                         <td><select @bind="c.Name" class="form-control">
-                                            @foreach (var group in DataModels.Board.Places.Where(card => card.ColorName != "Black" ).GroupBy(card => card.ColorName))
+                                            @foreach (var group in b.Places.Where(card => card.Ownable == true ).GroupBy(card => card.ColorName))
                                             {
                                                 <optgroup label="@group.Key">
                                                 @foreach (var card in group)
@@ -107,6 +111,8 @@
     public string Token {get; set;}
 
     DataModels.Game g = null;
+    DataModels.Board b = null;
+    string BoardVariant = "GB";
 
     string resp = "";
 
@@ -134,11 +140,19 @@
        NavigationManager.NavigateTo("/"+Token);
    }
 
+    private void VariantChanged(ChangeEventArgs e) {
+        BoardVariant = e.Value.ToString();
+        b = new DataModels.Board(BoardVariant);
+        StateHasChanged();
+    }
+
     protected override async Task OnInitializedAsync() {
         if (Token == null) {
             Token = NewSaveToken();
             NavigationManager.NavigateTo("/"+Token);
         }
+
+        b = new DataModels.Board(BoardVariant);
 
         DataModels.Game loadedGame = await JSRuntime.InvokeAsync<DataModels.Game>("realmShim_load", Token);
 
