@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MonopoSaver</title>
+    <base href="/" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="MonopoSaver.styles.css" rel="stylesheet" />
+    <link href="manifest.json" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+    <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="loadingAnniParent" >
+            <img src="assets/Splash.png" class="loadingAnni"/>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script>navigator.serviceWorker.register('service-worker.js');</script>
+
+    <script>
+        const client = stitch.Stitch.initializeDefaultAppClient("monoposaver-faflr");
+
+        window.login = async function(){
+            try {
+                if (!client.auth.isLoggedIn) {
+                    const credential = new stitch.AnonymousCredential();
+                    var authedUser = await client.auth.loginWithCredential(credential);
+                    if(authedUser) {
+                        console.log(`successfully logged in with id: ${authedUser.id}`);
+                        return true;
+                    }
+                    else {
+                        console.log(`login failed`);
+                        return false;
+                    }
+                } else {
+                    console.log(client.auth.currentUser);
+                    return true;
+                }
+                
+            }
+            catch(e) {
+                return false;
+            }
+        }
+
+        window.realmShim_load = async function(token) {
+            await login();
+            console.log("USING TOKEN: " + token)
+            var result = await client.callFunction("load",[token]);
+            console.log(result);
+            return result;
+        }
+
+        window.realmShim_save = async function(game) {
+            await login();
+            console.log(game);
+            var result = await client.callFunction("save",[game]);
+            console.log(result);
+        }
+    </script>
+</body>
+
+</html>

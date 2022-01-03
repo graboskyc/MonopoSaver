@@ -1,0 +1,144 @@
+﻿@page "/{Token}"
+@page "/"
+@inject IJSRuntime JSRuntime;
+@inject NavigationManager NavigationManager;
+
+<PageTitle>MonopoSaver</PageTitle>
+
+@if(g != null) {
+<EditForm Model="@g">
+    <h1>Game <input type="text" @bind="g.Token" readonly /> </h1>
+    @foreach (var p in g.Players)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Player <input type="text" @bind="p.Name" /></h5>
+            </div>
+            <div class="card-body">
+                <table class="tbl">
+                    <tr><th>Piece</th>
+                        <td><select @bind="p.GamePiece" class="form-control">
+                            @foreach (var piece in DataModels.Board.Pieces)
+                            {
+                                <option>@piece</option>
+                            }
+                            </select></td></tr>
+                    <tr><th>Position</th>
+                        <td><select @bind="p.LastPosition" class="form-control">
+                            @foreach (var card in DataModels.Board.Places)
+                            {
+                                <option>@card.Name</option>
+                            }
+                            </select></td></tr>
+                    <tr><th>Money</th>
+                        <td><div class="input-group"><div class="input-group-prepend">
+                            <div class="input-group-text">$</div></div>
+                            <input class="form-control" type="text" @bind="p.Money" /></div></td></tr>
+                    <tr><th>Get Out Of Jail Cards</th>
+                        <td><input class="form-control" type="text" @bind="p.GetOutOfJailCards" /></td></tr>
+                </table>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">@p.Name's Properties:</h5>
+                    </div>
+                    <table class="table table-striped">
+                        <thead class="thead-dark"><tr>
+                            <th>Name</th>
+                            <th>Houses</th>
+                            <th>Mortaged</th>
+                        </tr></thead>
+                        <tbody>
+                            @foreach (var c in p.Props) {
+                                <tr>
+                                    <td><select @bind="c.Name" class="form-control">
+                                        @foreach (var card in DataModels.Board.Places)
+                                        {
+                                            @if(card.Ownable == true) {
+                                                <option>@card.Name</option>
+                                            }
+                                        }
+                                        </select></td>
+                                    <td><select @bind="c.Houses" class="form-control">
+                                        <option value="0">None</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">Hotel</option>
+                                    </select></td>
+                                    <td><select @bind="c.isMortgaged" class="form-control">
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <button @onclick="@(() => AddProp(p))" class="btn btn-sm btn-gsky-sec" style="width: 100%;">Add Propery</button>
+                </div>
+                
+            </div>
+        </div>
+    }
+</EditForm>
+
+<br><br>
+
+<div>@resp</div>
+<button @onclick="AddPlayer" class="btn btn-lg btn-gsky-sec" style="width: 100%;">Add Player</button>
+<br>
+<button @onclick="Save" class="btn btn-lg btn-gsky-pri" style="width: 100%;">Save</button>
+}
+
+
+@code {
+    [Parameter]
+    public string Token {get; set;}
+
+    DataModels.Game g = null;
+
+    string resp = "";
+
+    private string NewSaveToken() {
+        Random random = new Random();
+        const string chars = "AaBbCcDdEeFfGgHhLMmNnQqRrYy23456789";
+        return new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
+   }
+
+   private void AddPlayer() {
+       g.Players.Add(new DataModels.Player());
+       StateHasChanged();
+   }
+
+   private void AddProp(DataModels.Player p) {
+       p.Props.Add(new DataModels.Prop());
+       StateHasChanged();
+   }
+
+   private async Task Save() {
+       await JSRuntime.InvokeVoidAsync("realmShim_save", g);
+   }
+
+   private async Task TryLoad() {
+       
+   }
+
+    protected override async Task OnInitializedAsync() {
+        if (Token == null) {
+            Token = NewSaveToken();
+            NavigationManager.NavigateTo("/"+Token);
+        }
+
+        DataModels.Game loadedGame = await JSRuntime.InvokeAsync<DataModels.Game>("realmShim_load", Token);
+
+        if(loadedGame != null) {
+            g = loadedGame;
+        } else {
+            g = new DataModels.Game();
+            g.Token = Token;
+        }
+
+        StateHasChanged();
+    }
+}
