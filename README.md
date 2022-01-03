@@ -9,11 +9,13 @@ Right now it stores the [Ghostbuster's Monopoly](https://hasbrogaming.hasbro.com
 
 It is offered as a service free [here](https://monoposaver-faflr.mongodbstitch.com).
 
-## Screenshots
-
-![](Screenshots/ss01.png)
-
 ## Tech Stack
 * Single Page App written in Blazor
 * Database is MongoDB Atlas
 * Backend is MongoDB Realm App Services
+
+## Screenshots
+
+![](Screenshots/ss01.png)
+![](Screenshots/ss02.png)
+![](Screenshots/ss03.png)
