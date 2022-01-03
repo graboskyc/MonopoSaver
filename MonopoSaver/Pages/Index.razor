@@ -3,7 +3,7 @@
 @inject IJSRuntime JSRuntime;
 @inject NavigationManager NavigationManager;
 
-<PageTitle>MonopoSaver</PageTitle>
+<PageTitle>Monopo Saver</PageTitle>
 
 @if(g != null) {
 <EditForm Model="@g">
@@ -33,9 +33,9 @@
                     <tr><th>Money</th>
                         <td><div class="input-group"><div class="input-group-prepend">
                             <div class="input-group-text">$</div></div>
-                            <input class="form-control" type="text" @bind="p.Money" /></div></td></tr>
+                            <input class="form-control" type="number" @bind="p.Money" /></div></td></tr>
                     <tr><th>Get Out Of Jail Cards</th>
-                        <td><input class="form-control" type="text" @bind="p.GetOutOfJailCards" /></td></tr>
+                        <td><input class="form-control" type="number" min="0" max="10" @bind="p.GetOutOfJailCards" /></td></tr>
                 </table>
 
                 <div class="card">
@@ -52,11 +52,14 @@
                             @foreach (var c in p.Props) {
                                 <tr>
                                     <td><select @bind="c.Name" class="form-control">
-                                        @foreach (var card in DataModels.Board.Places)
+                                        @foreach (var group in DataModels.Board.Places.Where(card => card.ColorName != "Black" ).GroupBy(card => card.ColorName))
                                         {
-                                            @if(card.Ownable == true) {
+                                            <optgroup label="@group.Key">
+                                            @foreach (var card in group)
+                                            {
                                                 <option>@card.Name</option>
                                             }
+                                            </optgroup>
                                         }
                                         </select></td>
                                     <td><select @bind="c.Houses" class="form-control">
@@ -88,7 +91,7 @@
 <div>@resp</div>
 <button @onclick="AddPlayer" class="btn btn-lg btn-gsky-sec" style="width: 100%;">Add Player</button>
 <br>
-<button @onclick="Save" class="btn btn-lg btn-gsky-pri" style="width: 100%;">Save</button>
+<button @onclick="Save" class="btn btn-lg btn-gsky-pri" style="width: 100%;">Save With New ID</button>
 }
 
 
@@ -117,11 +120,11 @@
    }
 
    private async Task Save() {
+       Token = NewSaveToken();
+       g.Token = Token;
+       StateHasChanged();
        await JSRuntime.InvokeVoidAsync("realmShim_save", g);
-   }
-
-   private async Task TryLoad() {
-       
+       NavigationManager.NavigateTo("/"+Token);
    }
 
     protected override async Task OnInitializedAsync() {
