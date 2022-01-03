@@ -6,16 +6,21 @@
 <PageTitle>Monopo Saver</PageTitle>
 
 @if(g != null) {
+    <div class="jumbotron jumbotron-fluid" style="margin-bottom:20px;">
+        <h1>Monopo Saver</h1>
+        <h3><i>Game Code <b>@g.Token</b></i></h3>
+    </div>
+
     <EditForm Model="@g">
-        <h1>Game <input type="text" @bind="g.Token" readonly /> </h1>
+
         @foreach (var p in g.Players)
         {
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Player <input type="text" @bind="p.Name" /></h5>
+            <div class="card" style="margin-bottom:30px;">
+                <div class="card-header ch-dark">
+                    <h5 class="card-title">Player <input type="text" @bind="p.Name" class="form-control" /></h5>
                 </div>
                 <div class="card-body">
-                    <table class="tbl">
+                    <table class="table">
                         <tr><th>Piece</th>
                             <td><select @bind="p.GamePiece" class="form-control">
                                 @foreach (var piece in DataModels.Board.Pieces)
@@ -42,7 +47,7 @@
                         <div class="card-header">
                             <h5 class="card-title">@p.Name's Properties:</h5>
                         </div>
-                        <table class="table table-striped">
+                        <table class="table table-striped" style="margin:5px;">
                             <thead class="thead-dark"><tr>
                                 <th>Name</th>
                                 <th>Houses</th>
