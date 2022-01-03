@@ -82,7 +82,7 @@
                                         <td>
                                             <button @onclick="(() => DelProp(p, c))" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span></button>
                                             </td>
-                                        <td><select @bind="c.Name" class="form-control">
+                                        <td><select @bind="c.Name" class="form-control" style="border-width:3px; border-color:@(b.Places.Where(p=> p.Name == c.Name).FirstOrDefault()?.Color ?? "#000000") ">
                                             @foreach (var group in b.Places.Where(card => card.Ownable == true ).GroupBy(card => card.ColorName))
                                             {
                                                 <optgroup label="@group.Key">
