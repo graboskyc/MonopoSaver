@@ -26,7 +26,7 @@
 @if(g != null) {
     <div class="jumbotron jumbotron-fluid" style="margin-bottom:20px;">
         <h1>Monopo Saver</h1>
-        <h3><i>Game Code <b>@g.Token</b></i></h3>
+        <h3><i>Game Code <b @onclick="CopyToClipboard">@g.Token</b></i></h3>
         <h3>Board Variant <select @onchange="VariantChanged" class="form-control">
             <option>GB</option>
             <option>Original</option>
@@ -184,6 +184,11 @@
 
     private async void ShowRules(){
         await JSRuntime.InvokeVoidAsync("openModal");
+    }
+
+    private async Task CopyToClipboard()
+    {
+        await JSRuntime.InvokeVoidAsync("copyToClipboard", g.Token);
     }
 
     protected override async Task OnInitializedAsync() {
