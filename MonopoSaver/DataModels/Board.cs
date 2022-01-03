@@ -3,10 +3,28 @@ namespace MonopoSaver.DataModels {
         private List<string> _pieces {get; set;}
         private List<Prop> _places {get; set;}
 
+        private string _rules {get;set;}
+
         public List<string> Pieces {get {return _pieces;}}
         public List<Prop> Places {get {return _places;}}
+        public string Rules {get { return _rules;}}
+
 
         public Board(string variant = "GB") {
+            _rules = @"
+# Money Breakdown
+
+*At the start of the game, distribute $1500 as follows:*
+
+* 2 x $500
+* 4 x $100
+* 1 x $50
+* 1 x $20
+* 2 x $10
+* 1 x $5
+* 5 x $1
+";
+            
             if(variant == "GB") {
                 _pieces =  new List<string>() {
                     "Cello",
@@ -60,6 +78,7 @@ namespace MonopoSaver.DataModels {
                     new Prop(){Name="Stay Puft",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
                     new Prop(){Name="Temple of Gozer", Color="#0050ef", ColorName="Blue", isMortgaged=0, Ownable=true, Houses=0}
                 };
+
             } else {
                 _pieces =  new List<string>() {
                     "Battleship",

@@ -2,9 +2,27 @@
 @page "/"
 @inject IJSRuntime JSRuntime;
 @inject NavigationManager NavigationManager;
+@using HeyRed.MarkdownSharp;
 
 <PageTitle>Monopo Saver</PageTitle>
 
+<div class="modal" id="ctr_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Rules</h5>
+        <button @onclick="(e=> ModalHasClosed(true))" class="close" >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @Rules
+      </div>
+    </div>
+  </div>
+</div>
+
+ 
 @if(g != null) {
     <div class="jumbotron jumbotron-fluid" style="margin-bottom:20px;">
         <h1>Monopo Saver</h1>
@@ -101,6 +119,8 @@
     <button @onclick="AddPlayer" class="btn btn-lg btn-gsky-sec" style="width: 100%;">Add Player</button>
     <br>
     <button @onclick="Save" class="btn btn-lg btn-gsky-pri" style="width: 100%;">Save With New ID</button>
+    <br>
+    <button @onclick="ShowRules" class="btn btn-lg btn-gsky-sec" style="width: 100%;">Show Rules</button>
 
     <br><br>
 }
@@ -113,8 +133,9 @@
     DataModels.Game g = null;
     DataModels.Board b = null;
     string BoardVariant = "GB";
-
     string resp = "";
+    private MarkupString Rules;
+    Markdown mark = new Markdown();
 
     private string NewSaveToken() {
         Random random = new Random();
@@ -143,7 +164,17 @@
     private void VariantChanged(ChangeEventArgs e) {
         BoardVariant = e.Value.ToString();
         b = new DataModels.Board(BoardVariant);
+        Rules = (MarkupString)mark.Transform(b.Rules);
         StateHasChanged();
+    }
+
+    private async void ModalHasClosed(bool closed)
+    {
+        await JSRuntime.InvokeVoidAsync("closeModal");
+    }
+
+    private async void ShowRules(){
+        await JSRuntime.InvokeVoidAsync("openModal");
     }
 
     protected override async Task OnInitializedAsync() {
@@ -153,6 +184,7 @@
         }
 
         b = new DataModels.Board(BoardVariant);
+        Rules = (MarkupString)mark.Transform(b.Rules);
 
         DataModels.Game loadedGame = await JSRuntime.InvokeAsync<DataModels.Game>("realmShim_load", Token);
 

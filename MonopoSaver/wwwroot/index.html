@@ -29,6 +29,8 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
     <script>
         const client = stitch.Stitch.initializeDefaultAppClient("monoposaver-faflr");
@@ -70,6 +72,14 @@
             console.log(game);
             var result = await client.callFunction("save",[game]);
             console.log(result);
+        }
+
+        window.openModal = function() {
+            $('#ctr_modal').modal('show');
+        }
+
+        window.closeModal = function() {
+            $('#ctr_modal').modal('hide');
         }
     </script>
 </body>
