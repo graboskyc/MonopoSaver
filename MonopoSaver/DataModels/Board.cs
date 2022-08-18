@@ -23,7 +23,7 @@ namespace MonopoSaver.DataModels {
 * 2 x $10
 * 1 x $5
 * 5 x $1
-";
+"; //https://en.wikipedia.org/wiki/Monopoly_(game)
             
             if(variant == "GB") {
                 _pieces =  new List<string>() {
@@ -82,15 +82,24 @@ namespace MonopoSaver.DataModels {
             } else {
                 _pieces =  new List<string>() {
                     "Battleship",
-                    "Car",
-                    "Cat",
-                    "Dog",
-                    "Duck",
-                    "Hat",
+                    "Race Car",
+                    "Top Hat",
+                    "Boot",
                     "Thimble",
+                    "Iron",
+                    "Cannon",
+                    "Lantern",
+                    "Purse",
+                    "Rocking Horse",
+                    "Dog",
+                    "Wheelbarrow",
+                    "Horse and Rider",
+                    "Money Sack",
+                    "Cat",
+                    "Duck",
                     "Penguin",
                     "T-Rex"
-                };
+                }; // https://en.wikipedia.org/wiki/Monopoly_(game)
 
                 _places = new List<Prop>() {
                     new Prop(){Name="Go",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
