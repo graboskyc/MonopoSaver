@@ -79,6 +79,60 @@ namespace MonopoSaver.DataModels {
                     new Prop(){Name="Temple of Gozer", Color="#0050ef", ColorName="Blue", isMortgaged=0, Ownable=true, Houses=0}
                 };
 
+            } if(variant == "Cat") {
+                _pieces =  new List<string>() {
+                    "Cat Food",
+                    "Fish",
+                    "Milk",
+                    "Mouse",
+                    "Sardines",
+                    "Yarn"
+                };
+
+                _places = new List<Prop>() {
+                    new Prop(){Name="Go",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Ocicat", Color="#a20025", ColorName="Red", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Purrfect 1",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Tonkinese", Color="#a20025", ColorName="Red", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Fleas",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Stray Cats",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Chartreux", Color="#fa6800", ColorName="Orange", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Cat-astrophe 1",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Somali", Color="#fa6800", ColorName="Orange", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Egyption Mau", Color="#fa6800", ColorName="Orange", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Water",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Just Prawling",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Turkish Van", Color="#e3c800", ColorName="Yellow", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Scratch Pole",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Himalayan", Color="#e3c800", ColorName="Yellow", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Manx", Color="#e3c800", ColorName="Yellow", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Scaredy Cats",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="British Shorthair", Color="#008a00", ColorName="Green", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Purrfect 2",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Russian Blue", Color="#008a00", ColorName="Green", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Ragdoll", Color="#008a00", ColorName="Green", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Free Catnip",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Sphynx", Color="#1ba1e2", ColorName="Light Blue", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Cat-astrophe 2",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Burmese", Color="#1ba1e2", ColorName="Light Blue", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Norwegian Forest Cat", Color="#1ba1e2", ColorName="Light Blue", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Cool Cats",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="American Shorthair", Color="#0050ef", ColorName="Blue", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Scotish Fold", Color="#0050ef", ColorName="Blue", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Mouse",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Birman", Color="#0050ef", ColorName="Blue", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Fall in Water",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Abyssinian", Color="#00aba9", ColorName="Teal", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Exotic", Color="#00aba9", ColorName="Teal", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Purrfect 3",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Siameset", Color="#00aba9", ColorName="Teal", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Copy Cats",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Maine Coon",  Color="#6a00ff", ColorName="Purple", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Cat-astrophe 3", Color="#000000", ColorName="Black", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Dog Tax",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Persian", Color="#6a00ff", ColorName="Purple", isMortgaged=0, Ownable=true, Houses=0}
+                };
+
             } else {
                 _pieces =  new List<string>() {
                     "Battleship",
