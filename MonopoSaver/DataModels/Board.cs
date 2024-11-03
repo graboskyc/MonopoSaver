@@ -79,7 +79,7 @@ namespace MonopoSaver.DataModels {
                     new Prop(){Name="Temple of Gozer", Color="#0050ef", ColorName="Blue", isMortgaged=0, Ownable=true, Houses=0}
                 };
 
-            } if(variant == "Cat") {
+            } else if(variant == "Cat") {
                 _pieces =  new List<string>() {
                     "Cat Food",
                     "Fish",
@@ -103,7 +103,7 @@ namespace MonopoSaver.DataModels {
                     new Prop(){Name="Water",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
                     new Prop(){Name="Just Prawling",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
                     new Prop(){Name="Turkish Van", Color="#e3c800", ColorName="Yellow", isMortgaged=0, Ownable=true, Houses=0},
-                    new Prop(){Name="Scratch Pole",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Scratch Pole",  Color="#000000", ColorName="Utilities", isMortgaged=0, Ownable=true, Houses=0},
                     new Prop(){Name="Himalayan", Color="#e3c800", ColorName="Yellow", isMortgaged=0, Ownable=true, Houses=0},
                     new Prop(){Name="Manx", Color="#e3c800", ColorName="Yellow", isMortgaged=0, Ownable=true, Houses=0},
                     new Prop(){Name="Scaredy Cats",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
@@ -119,7 +119,7 @@ namespace MonopoSaver.DataModels {
                     new Prop(){Name="Cool Cats",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
                     new Prop(){Name="American Shorthair", Color="#0050ef", ColorName="Blue", isMortgaged=0, Ownable=true, Houses=0},
                     new Prop(){Name="Scotish Fold", Color="#0050ef", ColorName="Blue", isMortgaged=0, Ownable=true, Houses=0},
-                    new Prop(){Name="Mouse",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
+                    new Prop(){Name="Mouse",  Color="#000000", ColorName="Utilities", isMortgaged=0, Ownable=true, Houses=0},
                     new Prop(){Name="Birman", Color="#0050ef", ColorName="Blue", isMortgaged=0, Ownable=true, Houses=0},
                     new Prop(){Name="Fall in Water",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
                     new Prop(){Name="Abyssinian", Color="#00aba9", ColorName="Teal", isMortgaged=0, Ownable=true, Houses=0},
@@ -127,8 +127,8 @@ namespace MonopoSaver.DataModels {
                     new Prop(){Name="Purrfect 3",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
                     new Prop(){Name="Siameset", Color="#00aba9", ColorName="Teal", isMortgaged=0, Ownable=true, Houses=0},
                     new Prop(){Name="Copy Cats",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
-                    new Prop(){Name="Maine Coon",  Color="#6a00ff", ColorName="Purple", isMortgaged=0, Ownable=false, Houses=0},
-                    new Prop(){Name="Cat-astrophe 3", Color="#000000", ColorName="Black", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Maine Coon",  Color="#6a00ff", ColorName="Purple", isMortgaged=0, Ownable=true, Houses=0},
+                    new Prop(){Name="Cat-astrophe 3", Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
                     new Prop(){Name="Dog Tax",  Color="#000000", ColorName="Black", isMortgaged=0, Ownable=false, Houses=0},
                     new Prop(){Name="Persian", Color="#6a00ff", ColorName="Purple", isMortgaged=0, Ownable=true, Houses=0}
                 };
