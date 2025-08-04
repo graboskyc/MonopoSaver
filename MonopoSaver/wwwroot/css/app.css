@@ -90,43 +90,6 @@ a, .btn-link {
     height: 100vh;
 }
 
-.btn-gsky-pri {
-    background-color: var(--gsky-bg-primary);
-    color: var(--gsky-text-primary);
-    text-align:center;
-    width:100%;
-    padding:5px;
-    margin-top:10px;
-    margin-bottom:10px;
-}
-
-.btn-gsky-sec {
-    background-color: var(--gsky-bg-secondary);
-    color: var(--gsky-text-primary);
-    text-align:center;
-    width:100%;
-    padding:5px;
-    margin-top:10px;
-    margin-bottom:10px;
-}
-
 body {
     background-color: var(--gsky-bg-primary);
-}
-
-.page {
-    background-color: #fff;
-    margin: 20px;
-    min-height: 100vh;
-    padding-bottom: 30px;
-}
-
-.ch-dark {
-    background-color: var(--gsky-bg-secondary) !important;
-    color: var(--gsky-text-primary) !important;
-}
-
-.jumbotron {
-    background-color:#60a917 !important;
-    padding:20px;
 }
