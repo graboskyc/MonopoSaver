@@ -1,13 +1,27 @@
-namespace MonopoSaver.DataModels {
-    class Player {
-        public string Name {get;set;}
-        public string GamePiece {get;set;}
-        public string LastPosition {get;set;}
-        public int Money {get;set;}
-        public List<Prop> Props {get;set;}
-        public int GetOutOfJailCards {get;set;}
+using System.Collections.Generic;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-        public Player() {
+namespace MonopoSaver.DataModels
+{
+    [BsonIgnoreExtraElements]
+    class Player
+    {
+        [BsonElement("name")]
+        public string Name { get; set; }
+        [BsonElement("gamePiece")]
+        public string GamePiece { get; set; }
+        [BsonElement("lastPosition")]
+        public string LastPosition { get; set; }
+        [BsonElement("money")]
+        public int Money { get; set; }
+        [BsonElement("props")]
+        public List<Prop> Props { get; set; }
+        [BsonElement("getOutOfJailCards")]
+        public int GetOutOfJailCards { get; set; }
+
+        public Player()
+        {
             Name = "";
             GamePiece = "";
             LastPosition = "";
