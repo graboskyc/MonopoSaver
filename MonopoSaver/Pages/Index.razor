@@ -6,72 +6,74 @@
 @using MongoDB.Bson;
 @using MongoDB.Driver;
 @inject IMongoCollection<Game> GCol;
-@using Blazorise;
 
 <PageTitle>Monopo Saver</PageTitle>
 
-<Modal @ref="modalRef">
-    <ModalContent Centered Size="ModalSize.ExtraLarge">
-        <ModalHeader>
-            <ModalTitle>Rules</ModalTitle>
-            <CloseButton />
-        </ModalHeader>
-        <ModalBody>
+@if(_showModal) {
+    <dialog open>
+        <article>
+            <header>
+            <button aria-label="Close" @onclick="ToggleRules"></button>
+            <p>
+                <strong>Rules</strong>
+            </p>
+            </header>
             @Rules
-        </ModalBody>
-    </ModalContent>
-</Modal>
-
+        </article>
+    </dialog>
+}
  
 @if(g != null) {
-    <div class="jumbotron jumbotron-fluid" style="margin-bottom:20px;">
-        <h1>Monopo Saver</h1>
+    <article>
+        <header>
+            <h1>Monopo Saver</h1>
+        </header>
+
         <h3><i>Game Code <b @onclick="CopyToClipboard">@g.Token</b></i></h3>
         <h3>Board Variant <select @onchange="VariantChanged" class="form-control">
             <option value="GB">GB</option>
             <option value="Cat">Cat</option>
             <option class="original">Original</option>
         </select></h3>
-    </div>
+    </article>
 
     <EditForm Model="@g">
 
         @foreach (var p in g.Players)
         {
-            <div class="card" style="margin-bottom:30px;">
-                <div class="card-header ch-dark">
-                    <h5 class="card-title">Player <input type="text" @bind="p.Name" class="form-control" /></h5>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <tr><th>Piece</th>
-                            <td><select @bind="p.GamePiece" class="form-control">
-                                @foreach (var piece in b.Pieces)
-                                {
-                                    <option>@piece</option>
-                                }
-                                </select></td></tr>
-                        <tr><th>Position</th>
-                            <td><select @bind="p.LastPosition" class="form-control">
-                                @foreach (var card in b.Places)
-                                {
-                                    <option>@card.Name</option>
-                                }
-                                </select></td></tr>
-                        <tr><th>Money</th>
-                            <td><div class="input-group"><div class="input-group-prepend">
-                                <div class="input-group-text">$</div></div>
-                                <input class="form-control" type="number" @bind="p.Money" /></div></td></tr>
-                        <tr><th>Get Out Of Jail Cards</th>
-                            <td><input class="form-control" type="number" min="0" max="10" @bind="p.GetOutOfJailCards" /></td></tr>
-                    </table>
+            <article>
+                <header data-theme="dark">
+                    <h2>Player <input type="text" @bind="p.Name" class="form-control" /></h2>
+                </header>            
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">@p.Name's Properties:</h5>
-                        </div>
-                        <table class="table table-striped" style="margin:5px;">
-                            <thead class="thead-dark"><tr>
+                <table>
+                    <tr><th>Piece</th>
+                        <td><select @bind="p.GamePiece" class="form-control">
+                            @foreach (var piece in b.Pieces)
+                            {
+                                <option>@piece</option>
+                            }
+                            </select></td></tr>
+                    <tr><th>Position</th>
+                        <td><select @bind="p.LastPosition" class="form-control">
+                            @foreach (var card in b.Places)
+                            {
+                                <option>@card.Name</option>
+                            }
+                            </select></td></tr>
+                    <tr><th>Money</th>
+                        <td><div class="input-group"><div class="input-group-prepend">
+                            <div class="input-group-text">$</div></div>
+                            <input class="form-control" type="number" @bind="p.Money" /></div></td></tr>
+                    <tr><th>Get Out Of Jail Cards</th>
+                        <td><input class="form-control" type="number" min="0" max="10" @bind="p.GetOutOfJailCards" /></td></tr>
+                </table>
+
+                <article>
+                    <header><h3 class="card-title">@p.Name's Properties:</h3></header>
+
+                        <table class="striped" style="margin:5px;">
+                            <thead data-theme="dark"><tr>
                                 <th></th>
                                 <th>Name</th>
                                 <th>House</th>
@@ -81,7 +83,7 @@
                                 @foreach (var c in p.Props) {
                                     <tr>
                                         <td>
-                                            <button @onclick="(() => DelProp(p, c))" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span></button>
+                                            <button class="secondary" @onclick="(() => DelProp(p, c))" style="border: var(--pico-del-color); background-color: var(--pico-del-color);"><span class="material-symbols-outlined">delete</span></button>
                                             </td>
                                         <td><select @bind="c.Name" class="form-control" style="border-width:3px; border-color:@(b.Places.Where(p=> p.Name == c.Name).FirstOrDefault()?.Color ?? "#000000") ">
                                             @foreach (var group in b.Places.Where(card => card.Ownable == true ).GroupBy(card => card.ColorName))
@@ -110,22 +112,22 @@
                                 }
                             </tbody>
                         </table>
-                        <button @onclick="@(() => AddProp(p))" class="btn btn-sm btn-gsky-sec" style="width: 100%;">Add Propery</button>
-                    </div>
-                    
-                </div>
-            </div>
+                        <footer>
+                            <button @onclick="@(() => AddProp(p))" class="secondary" style="width: 100%;">Add Propery</button>
+                        </footer>
+                </article>
+            </article>
         }
     </EditForm>
 
     <br><br>
 
     <div>@resp</div>
-    <button @onclick="AddPlayer" class="btn btn-lg btn-gsky-sec" style="width: 100%;">Add Player</button>
+    <button @onclick="AddPlayer" class="secondary" style="width: 100%; margin: .25rem;">Add Player</button>
     <br>
-    <button @onclick="Save" class="btn btn-lg btn-gsky-pri" style="width: 100%;">Save With New ID</button>
+    <button @onclick="Save" class="btn btn-lg btn-gsky-pri" style="width: 100%; margin: .25rem;">Save With New ID</button>
     <br>
-    <button @onclick="(() => modalRef.Show())" class="btn btn-lg btn-gsky-sec" style="width: 100%;">Show Rules</button>
+    <button @onclick="(() => ToggleRules())" class="outline" style="width: 100%; margin: .25rem;">Show Rules</button>
 
     <br><br>
 }
@@ -142,7 +144,11 @@
     private MarkupString Rules;
     Markdown mark = new Markdown();
     
-    private Modal modalRef;
+    private bool _showModal = false;
+
+    private void ToggleRules() {
+        _showModal = !_showModal;
+    }
 
     private string NewSaveToken() {
         Random random = new Random();
