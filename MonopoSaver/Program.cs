@@ -5,6 +5,8 @@ using MonopoSaver.DataModels;
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 using MonopoSaver;
+using Blazorise;
+using Blazorise.Bootstrap;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +17,15 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 builder.Services.AddHttpClient();
 
+builder.Services.AddBlazorise( options =>
+    {
+        options.Immediate = true;
+    } 
+).AddBootstrapProviders();
+
 static void ConfigureMDBServices(IServiceCollection services)
 {
-    
+
     string MDBCONNSTR = Environment.GetEnvironmentVariable("MDBCONNSTR").Trim();
     var settings = MongoClientSettings.FromConnectionString(MDBCONNSTR);
     settings.ServerApi = new ServerApi(ServerApiVersion.V1);

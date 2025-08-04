@@ -6,24 +6,21 @@
 @using MongoDB.Bson;
 @using MongoDB.Driver;
 @inject IMongoCollection<Game> GCol;
+@using Blazorise;
 
 <PageTitle>Monopo Saver</PageTitle>
 
-<div class="modal" id="ctr_modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Rules</h5>
-        <button @onclick="(e=> ModalHasClosed(true))" class="close" >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        @Rules
-      </div>
-    </div>
-  </div>
-</div>
+<Modal @ref="modalRef">
+    <ModalContent Centered Size="ModalSize.ExtraLarge">
+        <ModalHeader>
+            <ModalTitle>Rules</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            @Rules
+        </ModalBody>
+    </ModalContent>
+</Modal>
 
  
 @if(g != null) {
@@ -128,7 +125,7 @@
     <br>
     <button @onclick="Save" class="btn btn-lg btn-gsky-pri" style="width: 100%;">Save With New ID</button>
     <br>
-    <button @onclick="ShowRules" class="btn btn-lg btn-gsky-sec" style="width: 100%;">Show Rules</button>
+    <button @onclick="(() => modalRef.Show())" class="btn btn-lg btn-gsky-sec" style="width: 100%;">Show Rules</button>
 
     <br><br>
 }
@@ -144,6 +141,8 @@
     string resp = "";
     private MarkupString Rules;
     Markdown mark = new Markdown();
+    
+    private Modal modalRef;
 
     private string NewSaveToken() {
         Random random = new Random();
@@ -171,9 +170,8 @@
        g.Token = Token;
        StateHasChanged();
        var filter = Builders<DataModels.Game>.Filter.Eq(x => x.Token, g.Token);
-       var update = Builders<DataModels.Game>.Update.Set(x => x, g);
-       var options = new UpdateOptions { IsUpsert = true };
-       GCol.UpdateOne(filter, update, options);
+       var options = new ReplaceOptions { IsUpsert = true };
+       GCol.ReplaceOne(filter, g, options);
        NavigationManager.NavigateTo("/"+Token);
    }
 
@@ -182,15 +180,6 @@
         b = new DataModels.Board(BoardVariant);
         Rules = (MarkupString)mark.Transform(b.Rules);
         StateHasChanged();
-    }
-
-    private async void ModalHasClosed(bool closed)
-    {
-        await JSRuntime.InvokeVoidAsync("closeModal");
-    }
-
-    private async void ShowRules(){
-        await JSRuntime.InvokeVoidAsync("openModal");
     }
 
     private async Task CopyToClipboard()
