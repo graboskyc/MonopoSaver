@@ -1,8 +1,0 @@
-{
-    "app_id": "monoposaver-faflr",
-    "config_version": 20210101,
-    "name": "monoposaver",
-    "location": "US-VA",
-    "deployment_model": "LOCAL",
-    "environment": "production"
-}

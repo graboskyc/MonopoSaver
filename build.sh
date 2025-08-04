@@ -1,36 +1,41 @@
 #!/bin/bash
 
-echo
-echo "+================================"
-echo "| START: monoposaver"
-echo "+================================"
-echo
+source .env
+echo "Using conn string starting ${MDBCONNSTR:0:18}..."
 
 datehash=`date | md5sum | cut -d" " -f1`
 abbrvhash=${datehash: -8}
 
+echo
+echo "+======================"
+echo "| START: MonopoSaver"
+echo "+======================"
+echo
+
 echo 
 echo "Building container using tag ${abbrvhash}"
 echo
-docker build -t graboskyc/monoposaver:latest -t graboskyc/monoposaver:${abbrvhash} .
+docker build -t graboskyc/monoposaver:${abbrvhash} .
 
 EXITCODE=$?
+
+echo
+echo "MonopoSaver: Starting container"
+echo
 
 if [ $EXITCODE -eq 0 ]
     then
 
-    echo 
-    echo "Starting container"
-    echo
     docker stop monoposaver
     docker rm monoposaver
-    docker run -t -i -d -p 8000:8000 --name monoposaver --restart unless-stopped graboskyc/monoposaver:${abbrvhash}
+    docker run -t -i -d -p 9999:8080 --name monoposaver -e "MDBCONNSTR=${MDBCONNSTR}" --restart unless-stopped graboskyc/monoposaver:${abbrvhash}
 
     echo
     echo "+================================"
-    echo "| END:  monoposaver"
+    echo "| END: MonopoSaver"
     echo "+================================"
     echo
+
 else
     echo
     echo "+================================"
